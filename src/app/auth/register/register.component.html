@@ -1,0 +1,77 @@
+<section class="container">
+  <div class="row my-4 d-flex justify-content-center">
+    <div class="col-lg-6 col-md-12 box-shadow p-5 rounded-2">
+      <h2>Register</h2>
+
+      <form [formGroup]="registerForm" (ngSubmit)="registerUser()" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="fullNameInput" class="form-label">Full name:</label>
+          <input type="text" class="form-control"
+                 [ngClass]="name && name.valid ? 'is-valid' : name && name.touched ? 'is-invalid' : ''"
+                 id="fullNameInput" formControlName="name" required>
+          <div [ngClass]="name && name.invalid && name.touched ? 'invalid-feedback' : 'd-none'">
+            Name cannot be empty!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="usernameInput" class="form-label">Username:</label>
+          <input type="text" class="form-control"
+                 [ngClass]="username && username.valid ? 'is-valid' : username && username.touched ? 'is-invalid' : ''"
+                 id="usernameInput" formControlName="username" required>
+          <div [ngClass]="username && username.invalid && username.touched ? 'invalid-feedback' : 'd-none'">
+            <p *ngIf="username && username.hasError('required')">Username cannot be empty!</p>
+            <p *ngIf="username && username.hasError('minlength')">Username must have at least 4 characters!</p>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="emailInput" class="form-label">Email address:</label>
+          <input type="email" class="form-control" placeholder="name@example.com"
+                 [ngClass]="email && email.valid ? 'is-valid' : email && email.touched ? 'is-invalid' : ''"
+                 id="emailInput" formControlName="email" required>
+          <div [ngClass]="email && email.invalid && email.touched ? 'invalid-feedback' : 'd-none'">
+            <p *ngIf="email && email.hasError('required')">Email cannot be empty!</p>
+            <p *ngIf="email && email.hasError('email')">Email must be valid!</p>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="passwordInput" class="form-label">Password:</label>
+          <input type="password" class="form-control"
+                 [ngClass]="password && password.valid ? 'is-valid' : password && password.touched ? 'is-invalid' : ''"
+                 id="passwordInput" formControlName="password" required>
+          <div [ngClass]="password && password.invalid && password.touched ? 'invalid-feedback' : 'd-none'">
+            Password cannot be empty!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="passwordRepeatInput" class="form-label">Confirm password:</label>
+          <input type="password" class="form-control"
+                 [ngClass]="confirm_password && confirm_password.valid ? 'is-valid' :
+                 confirm_password && confirm_password.touched ? 'is-invalid' : ''"
+                 id="passwordRepeatInput" formControlName="confirm_password" required>
+          <div [ngClass]="confirm_password && confirm_password.invalid && confirm_password.touched ? 'invalid-feedback' : 'd-none'">
+            You have to repeat password!
+          </div>
+        </div>
+
+        <div *ngIf="successMessage" class="alert alert-success" role="alert">
+          {{successMessage}}
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          {{errorMessage}}
+        </div>
+
+        <div class="mb-3 d-flex flex-direction-row justify-content-end">
+          <input [disabled]="registerForm.invalid" type="submit" value="Register" class="btn btn-primary"/>
+          <input type="reset" value="Reset" class="btn btn-danger mx-1"/>
+        </div>
+        <a [routerLink]="'/login'" [className]="successMessage ? 'btn btn-primary' : ''">Back to login</a>
+
+      </form>
+
+    </div>
+  </div>
+</section>

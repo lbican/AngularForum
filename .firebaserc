@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angularforum-192ec": {
+      "hosting": {
+        "AngularForum": [
+          "angularforum-192ec"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angularforum-192ec"
+  }
+}

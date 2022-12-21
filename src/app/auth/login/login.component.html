@@ -1,0 +1,30 @@
+<section class="container">
+  <div class="row my-4 d-flex justify-content-center">
+    <div class="col-lg-6 col-md-12 box-shadow p-5 rounded-2">
+      <h2>Login</h2>
+
+      <form (submit)="onLogin()" [formGroup]="loginForm">
+        <div class="mb-3">
+          <label for="usernameInput" class="form-label">Username:</label>
+          <input type="text" class="form-control" id="usernameInput" formControlName="username">
+        </div>
+
+        <div class="mb-3">
+          <label for="passwordInput" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="passwordInput" formControlName="password">
+        </div>
+
+        <div class="mb-3 d-flex flex-direction-row justify-content-end">
+          <input type="submit" value="Login" class="btn btn-primary"/>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          {{errorMessage}}
+        </div>
+        <p>Don't have an account? <a [routerLink]="'register'">Register</a></p>
+
+      </form>
+
+    </div>
+  </div>
+</section>
