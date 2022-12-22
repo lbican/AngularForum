@@ -2,7 +2,7 @@
   <h2>Welcome to Angular Forum!</h2>
 
   <div class="border my-2 p-2 rounded-2" style="max-width: max-content">
-    <p><strong>User:</strong> {{user && user.username}} ({{user && user.email}})</p>
+    <p><strong>User:</strong><a [routerLink]="['user', user?.id]">{{ user && user.username}}</a> ({{user && user.email}})</p>
     <button class="btn btn-danger" (click)="logout()">Logout</button>
   </div>
 

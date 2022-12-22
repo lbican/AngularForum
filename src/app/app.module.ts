@@ -8,11 +8,13 @@ import {AuthService} from "./shared/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
 import {FormsModule} from "@angular/forms";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostsComponent
+    PostsComponent,
+    ProfileComponent
   ],
   imports: [
     HttpClientModule,
