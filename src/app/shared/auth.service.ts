@@ -17,7 +17,7 @@ export class AuthService {
 
   login(credentials : {username : string, password: string}){
 
-    this.http.get(environment.usersDatabase)
+    this.http.get(environment.usersDatabase + '.json')
       .subscribe((res : any) => {
         let users = [];
         for (let key in res){
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   register(user: any){
-    this.http.post(environment.usersDatabase,user)
+    this.http.post(environment.usersDatabase + '.json',user)
       .subscribe((res => {
         console.log(res);
         if(res){

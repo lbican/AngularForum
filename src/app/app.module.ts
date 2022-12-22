@@ -7,6 +7,7 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
 import {AuthService} from "./shared/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {SharedModule} from "./shared/shared.module";
     AppRoutingModule,
     SharedModule,
     BrowserModule,
+    FormsModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

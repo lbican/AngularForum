@@ -1,6 +1,72 @@
 <div class="container-lg">
-  <p>Hey! {{getUser().name}}</p>
-  <p>I will spam you on {{getUser().email}}</p>
+  <h2>Welcome to Angular Forum!</h2>
 
+  <div class="border my-2 p-2 rounded-2" style="max-width: max-content">
+    <p><strong>User:</strong> {{user && user.username}} ({{user && user.email}})</p>
+    <button class="btn btn-danger" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="row post_container border rounded-2 p-2">
+    <div class="col-lg-12">
+      <h3>Posts({{posts.length}})</h3>
+      <div *ngIf="mode === 'add'; then newPostMode else askMode"></div>
+      <div *ngIf="mode === 'edit'; then editMode else displayPostsMode"></div>
+
+    </div>
+  </div>
 </div>
-<button class="btn btn-danger" (click)="logout()">Logout</button>
+
+<ng-template #askMode>
+  <button class="btn btn-primary m-1" (click)="startAdding()"><i class="bi bi-plus"></i> Add new post</button>
+</ng-template>
+
+<ng-template #newPostMode>
+  <div class="row">
+    <div class="col-lg-6">
+
+      <div class="form-group">
+        <p>by <b>{{user && user.username}}</b> at {{getTime(selectedPost.timestamp) || 'Unknown time'}}</p>
+      </div>
+      <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea [(ngModel)]="new.comment" class="form-control" id="comment" rows="6"></textarea>
+      </div>
+
+      <button class="btn btn-success d-inline mx-1" (click)="addPost()">
+        <i class="bi bi-send"></i> Send
+      </button>
+      <button class="btn btn-danger m-1" (click)="onCancel()">Cancel</button>
+
+
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editMode>
+  <div class="p-2">
+    <p>by <b>{{user && user.username}}</b> at {{getTime(selectedPost.timestamp) || 'Unknown time'}}</p>
+
+    <div class="form-group">
+      <label for="editComment">Comment</label>
+      <textarea [(ngModel)]="selectedPost.comment" class="form-control" id="editComment" rows="6">
+        </textarea>
+    </div>
+
+    <button class="btn btn-warning d-inline m-1" (click)="editPost()">Done editing</button>
+    <button class="btn btn-danger m-1" (click)="onCancel()">Cancel</button>
+
+  </div>
+</ng-template>
+
+<ng-template #displayPostsMode>
+  <div class="p-2 border rounded-2 my-2 bg-light" *ngFor="let post of posts; index as indexOfelement;">
+    <p>by <b>{{getPostUser(post.userId)}}</b> at {{getTime(post.timestamp)}}</p>
+    <p>{{post.comment}}</p>
+    <button class="btn btn-danger d-inline mx-1" *ngIf="isEditableByUser(post.userId)" (click)="deletePost(indexOfelement)">
+      <i class="bi bi-trash"></i> Delete
+    </button>
+    <button class="btn btn-warning d-inline mx-1" *ngIf="isEditableByUser(post.userId)" (click)="startEditing(posts[indexOfelement])">
+      <i class="bi bi-pencil-square"></i> Edit
+    </button>
+  </div>
+</ng-template>
