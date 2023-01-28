@@ -4,8 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  usersDatabase: 'https://angularforum-192ec-default-rtdb.europe-west1.firebasedatabase.app/users',
-  postsDatabase: 'https://angularforum-192ec-default-rtdb.europe-west1.firebasedatabase.app/posts',
+  usersDatabase: 'http://localhost:8081/api/users',
+  postsDatabase: 'http://localhost:8081/api/posts',
+  authUser: 'http://localhost:8081/api/login',
 
   production: false
 };

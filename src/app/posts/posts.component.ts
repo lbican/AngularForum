@@ -3,7 +3,7 @@ import {AuthService} from "../shared/auth.service";
 import {Router} from "@angular/router";
 import {User} from "../shared/user.model";
 import {Post} from "../shared/post.model";
-import {BehaviorSubject, Subscription, Timestamp} from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 import {PostsService} from "./posts.service";
 
 @Component({
@@ -37,33 +37,33 @@ export class PostsComponent implements OnInit, OnDestroy{
     }
   }
 
-  isEditableByUser(postUid: string):boolean{
+  isEditableByUser(postUid: number):boolean{
     return this.user?.id === postUid
   }
 
   addPost(){
+    const date = new Date().toLocaleString()
+                           .slice(0, 19)
+                           .replace('T', ' ');
+
     this.mode = '';
     this.postsService.addPost({
-      userId: this.user?.id || 'Unknown',
-      timestamp: new Date(),
+      username: '',
+      id: 0,
+      userId: this.user!.id,
+      timestamp: date,
       comment: this.new.comment
     });
   }
 
-  getTime(time: Date): string{
+  getTime(time: string): string{
     let convertTime = new Date(time);
     return convertTime.toLocaleString();
   }
 
-  deletePost(index: number){
+  deletePost(postId: number){
     console.log('Deleting post with index');
-    let post = this.posts[index];
-    console.log(post)
-    this.postsService.deletePost(post.id!);
-  }
-
-  getPostUser(id:string):string{
-    return <string>this.postsService.getUserById(id)?.username
+    this.postsService.deletePost(postId);
   }
 
   startEditing(post: Post){
@@ -78,12 +78,13 @@ export class PostsComponent implements OnInit, OnDestroy{
 
   startAdding(){
     this.selectedPost = new Post();
+    console.log(this.selectedPost);
     this.mode = 'add';
   }
 
   onCancel(){
     this.mode = '';
-    this.selectedPost = {id: '', comment: '', userId: '', timestamp: new Date()}
+    this.selectedPost = {username: '', id: 0, comment: '', userId: 0, timestamp: new Date().toLocaleString()}
   }
 
   logout(){

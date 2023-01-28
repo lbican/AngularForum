@@ -1,18 +1,18 @@
 <div class="container-lg">
   <div class="row">
     <div class="col-lg-8">
-      <h4>Posts by {{getUser().username}} ({{posts.length}})</h4>
+      <h4>Posts by {{user.username}} ({{posts.length}})</h4>
       <div class="p-2 border rounded-2 my-2 bg-light" *ngFor="let post of posts;">
-        <p>by <b>{{getUser().username}}</b> at {{getTime(post.timestamp)}}</p>
+        <p>by <b>{{user.username}}</b> at {{getTime(post.timestamp)}}</p>
         <p>{{post.comment}}</p>
       </div>
     </div>
     <div class="col-lg-4">
       <p>User data</p>
       <p>
-      Username: {{getUser().username}}<br/>
-      Email: {{getUser().email}}<br/>
-      Name: {{getUser().name}}<br/>
+      Username: {{user.username}}<br/>
+      Email: {{user.email}}<br/>
+      Name: {{user.name}}<br/>
       </p>
     </div>
     <a [routerLink]="''">Back</a>

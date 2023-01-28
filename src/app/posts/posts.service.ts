@@ -13,9 +13,7 @@ interface UserResponse{
 })
 export class PostsService{
   posts : Post[] = [];
-  users: User[] = [];
   PostSubject : BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
-  UserSubject : BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   constructor(private http:HttpClient, private dataService:DataService) {
     this.init()
   }
@@ -26,12 +24,6 @@ export class PostsService{
         this.posts=res;
         this.PostSubject.next(this.posts);
       })
-
-    this.dataService.getUsers().subscribe(res => {
-        this.users=res;
-        this.UserSubject.next(this.users);
-      }
-    )
   }
 
   getPosts(){
@@ -41,22 +33,13 @@ export class PostsService{
 
   addPost(post:Post){
     this.dataService.addPost(post)
-      .subscribe((res => {
-        let userRes = res as UserResponse;
-        this.posts.push({id:userRes.name, ...post});
+      .subscribe((() => {
+        this.posts.push({...post});
         this.PostSubject.next(this.posts);
       }));
   }
 
-  getUserById(id:string){
-    return this.users.find(u => u.id==id);
-  }
-
-  getPost(postId:string){
-    return this.posts.find(c => c.id==postId);
-  }
-
-  deletePost(id:string){
+  deletePost(id:number){
     this.dataService.deletePost(id)
       .subscribe((() => {
         this.posts=this.posts.filter(c => c.id!=id);

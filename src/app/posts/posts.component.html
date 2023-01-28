@@ -25,7 +25,7 @@
     <div class="col-lg-6">
 
       <div class="form-group">
-        <p>by <b>{{user && user.username}}</b> at {{getTime(selectedPost.timestamp) || 'Unknown time'}}</p>
+        <p>by <b>{{user && user.username}}</b> at {{selectedPost.timestamp || 'Unknown time'}}</p>
       </div>
       <div class="form-group">
         <label for="comment">Comment</label>
@@ -60,9 +60,9 @@
 
 <ng-template #displayPostsMode>
   <div class="p-2 border rounded-2 my-2 bg-light" *ngFor="let post of posts; index as indexOfelement;">
-    <p>by <b>{{getPostUser(post.userId)}}</b> at {{getTime(post.timestamp)}}</p>
+    <p>by <b>{{post.username}}</b> at {{getTime(post.timestamp)}}</p>
     <p>{{post.comment}}</p>
-    <button class="btn btn-danger d-inline mx-1" *ngIf="isEditableByUser(post.userId)" (click)="deletePost(indexOfelement)">
+    <button class="btn btn-danger d-inline mx-1" *ngIf="isEditableByUser(post.userId)" (click)="deletePost(post.id)">
       <i class="bi bi-trash"></i> Delete
     </button>
     <button class="btn btn-warning d-inline mx-1" *ngIf="isEditableByUser(post.userId)" (click)="startEditing(posts[indexOfelement])">

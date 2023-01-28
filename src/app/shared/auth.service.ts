@@ -17,17 +17,11 @@ export class AuthService {
 
   login(credentials : {username : string, password: string}){
 
-    this.http.get(environment.usersDatabase + '.json')
+    this.http.post(environment.authUser, credentials)
       .subscribe((res : any) => {
-        let users = [];
-        for (let key in res){
-          console.log(res[key])
-          users.push({...res[key], id:key});
-        }
-
-        const user = users.find(u => u.username==credentials.username && u.password==btoa(credentials.password));
-        if (user) {
-          this.user = user;
+        console.log(res);
+        if(res.isAuthenticated){
+          this.user = res.user;
           localStorage.setItem('user', JSON.stringify(this.user));
           this.authChange.next(true);
           this.router.navigate(['/']).then(() => Promise.resolve());
@@ -38,7 +32,7 @@ export class AuthService {
   }
 
   register(user: any){
-    this.http.post(environment.usersDatabase + '.json',user)
+    this.http.post(environment.usersDatabase, user)
       .subscribe((res => {
         console.log(res);
         if(res){

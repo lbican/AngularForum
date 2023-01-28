@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Post} from "./post.model";
 import {environment} from "../../environments/environment";
-import {first} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +12,14 @@ export class DataService{
   constructor(private http:HttpClient) { }
 
   getPosts(){
-    return this.http.get(environment.postsDatabase + '.json')
+    return this.http.get(environment.postsDatabase)
       .pipe(map((res:any) => {
-        const posts=[];
-        for (let key in res){
-          posts.push({...res[key], id:key});
-        }
-        return posts;
+        return [...res];
       }));
   }
 
   getUsers(){
-    return this.http.get(environment.usersDatabase + '.json')
+    return this.http.get(environment.usersDatabase)
       .pipe(map((res:any) => {
         const users=[];
         for (let key in res){
@@ -34,15 +29,22 @@ export class DataService{
       }));
   }
 
-  addPost(post:Post){
-    return this.http.post(environment.postsDatabase + '.json',post);
+  getUser(id: number){
+    console.log('GETTING USER');
+    return this.http.get(`${environment.usersDatabase}/${id}`).pipe(map((res:any) => {
+      return {...res}
+    }))
   }
 
-  deletePost(id:string){
-    return this.http.delete(`${environment.postsDatabase}/${id}.json`)
+  addPost(post:Post){
+    return this.http.post(environment.postsDatabase, post);
+  }
+
+  deletePost(id:number){
+    return this.http.delete(`${environment.postsDatabase}/${id}`)
   }
 
   editPost(post:Post){
-    return this.http.patch(`${environment.postsDatabase}/${post.id}/.json`,post)
+    return this.http.patch(`${environment.postsDatabase}/${post.id}`, post)
   }
 }
