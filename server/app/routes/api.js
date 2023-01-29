@@ -122,13 +122,11 @@ module.exports=function(express, pool){
     .post(async function(req,res){
       const post = {
         userId: Number(req.body.userId),
-        timestamp: req.body.timestamp,
         comment: req.body.comment,
       }
 
-      console.log(post);
-      pool.query('INSERT INTO posts (userId, timestamp, comment) VALUES (?, ?, ?)',
-        [post.userId, post.timestamp, post.comment]
+      pool.query('INSERT INTO posts (userId, timestamp, comment) VALUES (?, NOW(), ?)',
+        [post.userId, post.comment]
       )
         .then(([post]) => {
           res.json({id: post.insertId});

@@ -2,12 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Post} from "../shared/post.model";
 import {BehaviorSubject} from "rxjs";
-import {DataService} from "../shared/data.service";
-import {User} from "../shared/user.model";
+import {DataService, NewPost} from "../shared/data.service";
 
-interface UserResponse{
-  name: string
-}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,12 +28,14 @@ export class PostsService{
   }
 
 
-  addPost(post:Post){
+  addPost(post : NewPost){
     this.dataService.addPost(post)
-      .subscribe((() => {
-        this.posts.push({...post});
-        this.PostSubject.next(this.posts);
-      }));
+      .subscribe(() => {
+        this.dataService.getPosts().subscribe(res => {
+          this.posts=res;
+          this.PostSubject.next((this.posts));
+        })
+      });
   }
 
   deletePost(id:number){

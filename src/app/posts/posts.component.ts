@@ -48,10 +48,7 @@ export class PostsComponent implements OnInit, OnDestroy{
 
     this.mode = '';
     this.postsService.addPost({
-      username: '',
-      id: 0,
       userId: this.user!.id,
-      timestamp: date,
       comment: this.new.comment
     });
   }
@@ -62,7 +59,7 @@ export class PostsComponent implements OnInit, OnDestroy{
   }
 
   deletePost(postId: number){
-    console.log('Deleting post with index');
+    console.log('Deleting post with index', postId);
     this.postsService.deletePost(postId);
   }
 
@@ -78,7 +75,6 @@ export class PostsComponent implements OnInit, OnDestroy{
 
   startAdding(){
     this.selectedPost = new Post();
-    console.log(this.selectedPost);
     this.mode = 'add';
   }
 
